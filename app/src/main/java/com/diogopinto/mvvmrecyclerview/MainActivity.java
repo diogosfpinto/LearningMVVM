@@ -36,12 +36,8 @@ public class MainActivity extends AppCompatActivity {
 //        Inicializando componentes de layout
         inicializarComponentes();
 
-//        Add items on arraylist
-        addItemsOnList();
-
 //        Inicializa os componentes e dependencias de para abrir os itens da recyclerView
         initializeRecyclerView();
-
 
 
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -64,19 +60,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
 
     }
-
-    private void addItemsOnList(){
-        NicePlace nicePlace = new NicePlace();
-
-        nicePlace.setImageUrl("https://i.ytimg.com/vi/KFj8EOktfwA/hqdefault.jpg");
-        nicePlace.setTitle("Imagem teste");
-        nicePlaces.add(nicePlace);
-
-        nicePlace.setImageUrl("https://http2.mlstatic.com/quadro-decorativo-natureza-paisagem-natural-salas-decorar-06-D_NQ_NP_700305-MLB29130115553_012019-F.jpg");
-        nicePlace.setTitle("Segunda Imagem teste");
-        nicePlaces.add(nicePlace);
-    }
-
 
     private void inicializarComponentes() {
         recyclerView = findViewById(R.id.recyclerViewNicePlaces);
