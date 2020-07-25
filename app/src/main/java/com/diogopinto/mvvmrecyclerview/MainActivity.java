@@ -3,6 +3,7 @@ package com.diogopinto.mvvmrecyclerview;
 import android.os.Bundle;
 
 import com.diogopinto.mvvmrecyclerview.adapters.RecyclerAdapter;
+import com.diogopinto.mvvmrecyclerview.models.NicePlace;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -15,11 +16,15 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
 
     private RecyclerAdapter recyclerAdapter;
+    private ArrayList<NicePlace> nicePlaces = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,11 +36,13 @@ public class MainActivity extends AppCompatActivity {
 //        Inicializando componentes de layout
         inicializarComponentes();
 
-        recyclerAdapter = new RecyclerAdapter();
+//        Add items on arraylist
+        addItemsOnList();
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(recyclerAdapter);
+//        Inicializa os componentes e dependencias de para abrir os itens da recyclerView
+        initializeRecyclerView();
+
+
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -46,6 +53,30 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void initializeRecyclerView() {
+
+        recyclerAdapter = new RecyclerAdapter(nicePlaces, this);
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(recyclerAdapter);
+        recyclerView.setHasFixedSize(true);
+
+    }
+
+    private void addItemsOnList(){
+        NicePlace nicePlace = new NicePlace();
+
+        nicePlace.setImageUrl("https://i.ytimg.com/vi/KFj8EOktfwA/hqdefault.jpg");
+        nicePlace.setTitle("Imagem teste");
+        nicePlaces.add(nicePlace);
+
+        nicePlace.setImageUrl("https://http2.mlstatic.com/quadro-decorativo-natureza-paisagem-natural-salas-decorar-06-D_NQ_NP_700305-MLB29130115553_012019-F.jpg");
+        nicePlace.setTitle("Segunda Imagem teste");
+        nicePlaces.add(nicePlace);
+    }
+
 
     private void inicializarComponentes() {
         recyclerView = findViewById(R.id.recyclerViewNicePlaces);
