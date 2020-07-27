@@ -4,11 +4,15 @@ import android.os.Bundle;
 
 import com.diogopinto.mvvmrecyclerview.adapters.RecyclerAdapter;
 import com.diogopinto.mvvmrecyclerview.models.NicePlace;
+import com.diogopinto.mvvmrecyclerview.viewmodels.MainActivityViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerAdapter recyclerAdapter;
     private ArrayList<NicePlace> nicePlaces = new ArrayList<>();
 
+    private MainActivityViewModel mMainActivityViewModel = new MainActivityViewModel();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +38,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        mMainActivityViewModel.getNicePlaces().observe(this, new Observer<List<NicePlace>>() {
+            @Override
+            public void onChanged(List<NicePlace> nicePlaces) {
+                recyclerAdapter.notifyDataSetChanged();
+            }
+        });
 
 //        Inicializando componentes de layout
         inicializarComponentes();
@@ -52,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializeRecyclerView() {
 
-        recyclerAdapter = new RecyclerAdapter(nicePlaces, this);
+        recyclerAdapter = new RecyclerAdapter(this, mMainActivityViewModel.getNicePlaces().getValue());
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);

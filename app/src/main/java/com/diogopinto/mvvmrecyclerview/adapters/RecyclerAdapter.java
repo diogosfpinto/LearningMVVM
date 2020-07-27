@@ -23,7 +23,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     private ArrayList<NicePlace> nicePlaces;
     private Context mContext;
 
-    public RecyclerAdapter(ArrayList<NicePlace> nicePlaces, Context mContext) {
+    public RecyclerAdapter(Context mContext, ArrayList<NicePlace> nicePlaces) {
         this.nicePlaces = nicePlaces;
         this.mContext = mContext;
     }
